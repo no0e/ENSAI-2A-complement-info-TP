@@ -56,6 +56,22 @@ class TypeAttackDAO(metaclass=Singleton):
         if res:
             return res["id_attack_type"]
 
+    def find_attack_by_id(self , id:int) :
+         """
+        returns the attack with the given ID or None if the attack is not found
+        """
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT *"
+                    "FROM tp.attack"
+                    "WhERE id_attack = %(id)s",{"id":id},
+                )
+
+                # to store raw results
+                return cursor.fetchall()
+
+
 
 if __name__ == "__main__":
     # Pour charger les variables d'environnement contenues dans le fichier .env
